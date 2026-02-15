@@ -100,7 +100,6 @@ void countItem(LLS* list, char* str){ // add to count if word is in list, otherw
             return;
         }
         else if ((strcmp(str, curNode->word)) < 0 ){ // case: word is NOT in list
-            //printf("Breakin'\n");
             break;
         }
         else{ // case: word not seen yet
@@ -129,7 +128,6 @@ void countItem(LLS* list, char* str){ // add to count if word is in list, otherw
         return;
     }
 
-    // printf("8\n");
     if (curNode == NULL){ // add node to end of list
         curNode = prevNode;
         Node* newNode = createNode();
@@ -163,21 +161,13 @@ LLS* fileparse(const char *str){
     }
     char* buffptr;
     int chk = fscanf(fptr, "%ms", &buffptr);
-    // printf("1");
     while ((chk!= EOF) && (chk != 0)){
-
-        // printf("2");
-        //printf("Word found: '%s'.\n", buffptr);
         if (buffptr == NULL){
             continue;
         }
         countItem(list, buffptr);
-        //printf("word before freeing: %s.\n", list->head->word);
-        // printf("6");
         free(buffptr);
         buffptr = NULL;
-        // printf("word after freeing: %s.\n", list->head->word);
-        // printf("5");
         chk = fscanf(fptr, "%ms", &buffptr);
     }
     free(buffptr);
