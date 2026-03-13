@@ -1,0 +1,18 @@
+CC = gcc# compiler
+CFLAGS = -pthread -Wall -g# compile flags
+LIBS = -lpthread -lrt# libs
+
+all: mapper reducer
+	rm -f *.txt
+
+mapper: objs/mapper.o
+	$(CC) -o mapper objs/mapper.o $(LIBS)
+
+reducer: objs/reducer.o
+	$(CC) -o reducer objs/reducer.o $(LIBS)
+
+objs/%.o:%.c
+	$(CC) $(CFLAGS) -c $*.c -o objs/$*.o
+
+clean:
+	rm -f reducer mapper *.o *~ *.txt

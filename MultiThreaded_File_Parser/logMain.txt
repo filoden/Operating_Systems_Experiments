@@ -1,0 +1,3 @@
+Found directories from map command are:
+
+

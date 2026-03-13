@@ -1,0 +1,1 @@
+gdb --args ./mapper commandFile1.dat 10

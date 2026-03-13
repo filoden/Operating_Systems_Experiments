@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build mapper",
+      "type": "shell",
+      "command": "make",
+      "args": ["mapper"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"],
+      "detail": "Build the mapper binary using the Project2 Makefile"
+    },
+    {
+      "label": "build reducer",
+      "type": "shell",
+      "command": "make",
+      "args": ["reducer"],
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "Build the reducer binary using the Project2 Makefile"
+    },
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "make",
+      "args": ["clean"],
+      "group": "none",
+      "detail": "Clean build artifacts"
+    }
+  ]
+}

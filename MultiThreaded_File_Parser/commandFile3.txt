@@ -1,0 +1,3 @@
+map /home/frn/Documents/CSE 420 Project 1/Project2/searchdir/A
+map /home/frn/Documents/CSE 420 Project 1/Project2/searchdir/B
+map /home/frn/Documents/CSE 420 Project 1/Project2/searchdir
