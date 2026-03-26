@@ -36,7 +36,7 @@ typedef struct buff{
     int count;
 } buff;
 
-buff *buffer[10];
+buff *buffer[1024*64]; // buffer sized for max buffsize, only buffsize is used
 pid_t id = 0;
 char *self_pid;
 
@@ -325,6 +325,7 @@ void cleanup(){
 }
 
 int main(int argc, char *argv[]){
+    max = atoi(argv[2]);
     LLS* dir_cmds = getDirectories(argc, argv);
     Node *curNode = dir_cmds->head;
     pid_t pid[10];
