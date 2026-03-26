@@ -99,9 +99,7 @@ int recmsg(int qid, mLLS* list){
         perror("msgrcv");
         return 1;
     }
-    //fprintf(stderr, "word: %s, num: %d\n", msg.word, msg.cnt);
     if (msg.cnt == end_msg_num){
-        //fprintf(stderr, "YUP its thatgddamn strncmp fucking up again.\n");
         if (!(strncmp(msg.word, end_msg_str, 20))){
             //fprintf(stderr, "We got one endin'.\n");
             return 1;
@@ -140,7 +138,6 @@ mLLS* RecmList(){
     mLLS *rec_list = createmList();
     int count = 0;
     while (count < num_senders){
-        //fprintf(stderr, "msg rec.\n");
         count += recmsg(qid, rec_list);
     }
     endTransaction(qid);
