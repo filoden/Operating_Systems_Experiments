@@ -37,10 +37,10 @@ void file_creation(){
     }
     // post - we should now have an open file of length 0
     for (int i = 0; i<size; i++){
-        char buf[4096];
+        char buf[BLOCK_SIZE];
         memset(buf,0,sizeof(buf));
         int err = write(fd, buf, sizeof(buf));
-        if (err != 4096){
+        if (err != BLOCK_SIZE){
             fprintf(stderr, "Failure writing 0 to file: i = %d\n", i);
         }
     }
@@ -84,6 +84,7 @@ void file_randio(){
         exit(1);
     }
     int file_size = info->st_size;
+    free(info);
     int io_size = size; // max io size in bytes
     int max_add = file_size - io_size + 1; // max file add in bytes to prevent reading invalid data
     int max_block = max_add / BLOCK_SIZE - 1; // total number of valid blocks which can be read minus 1
@@ -117,6 +118,7 @@ void file_randio(){
 
 
     }
+    free(io_buf);
     qsort(latency, samples, sizeof(latency[0]), compar);
     float median;
     if (samples % 2){ // if not even

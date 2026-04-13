@@ -23,11 +23,9 @@ loopfat32=$(sudo losetup --find --show --nooverlap --direct-io=on fat32disk.img)
 out=$(mkfs.fat -a -S 512 -s 8 -F 32 -n FAT32VOL fat32disk.img)
 mkdir myfat32fs
 sudo mount -t msdos -o rw,uid=$USER,gid=$USER $loopfat32 myfat32fs
-./myio 1 myfat32fs/fat32.t 50000
-# at this point we've created the fat32 file system on the mountpoint myfat32fs and file fat32.t within
+valgrind ./myio 1 myfat32fs/fat32.t 50000
 sudo sh -c 'sync && echo 3 > /proc/sys/vm/drop_caches'
-# determine latency for 1000 samples on io grabs of 4096 bytes
-fat32=$(./myio 2 myfat32fs/fat32.t 4096 1000)
+fat32=$(valgrind ./myio 2 myfat32fs/fat32.t 4096 1000)
 echo "myio-fat32-4K:" $fat32
 sudo sh -c 'sync && echo 3 > /proc/sys/vm/drop_caches'
 fio --filename=myfat32fs/fat32.t --direct=1 --rw=randread --bs=4k --ioengine=sync --iodepth=1 --numjobs=1 --number_ios=1000 --name=readlatency-test-fat32 --readonly --clat_percentiles=1 --percentile_list=50 > fiofat32out.txt
@@ -40,7 +38,7 @@ printf "fio-fat32-4K: %.2f\n" $(($fiofat32))e-3
 doublefiofat32=$(($fiofat32/500))
 halffiofat32=$(($fiofat32/2000))
 fat32int=${fat32%.*}
-echo "double of fio (msec):" $doublefiofat32, "fio (nsec):" $fiofat32, "half of fio (msec):" $halffiofat32, "fat32 as int (msec):" $fat32int
+#echo "double of fio (msec):" $doublefiofat32, "fio (nsec):" $fiofat32, "half of fio (msec):" $halffiofat32, "fat32 as int (msec):" $fat32int
 if (($fat32int > $halffiofat32 && $fat32int < $doublefiofat32)); then
     echo Test 2 - Success--------------------fat32-latency------------------------------Success
 else
