@@ -1,6 +1,6 @@
-rm f8
-rm f7
+rm myxfsfs/ext4.t
+#cd ..
 sudo umount /dev/loop8
 sudo losetup -d /dev/loop8
-rmdir myfat32fs
+rmdir myxfsfs
 rm f9

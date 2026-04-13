@@ -1,6 +1,5 @@
-rm f8
-rm f7
+rm myext4fs/ext4.t
 sudo umount /dev/loop8
 sudo losetup -d /dev/loop8
-rmdir myfat32fs
+rmdir myext4fs
 rm f9
