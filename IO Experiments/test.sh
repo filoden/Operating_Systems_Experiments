@@ -23,9 +23,9 @@ loopfat32=$(sudo losetup --find --show --nooverlap --direct-io=on fat32disk.img)
 out=$(mkfs.fat -a -S 512 -s 8 -F 32 -n FAT32VOL fat32disk.img)
 mkdir myfat32fs
 sudo mount -t msdos -o rw,uid=$USER,gid=$USER $loopfat32 myfat32fs
-valgrind ./myio 1 myfat32fs/fat32.t 50000
+./myio 1 myfat32fs/fat32.t 50000
 sudo sh -c 'sync && echo 3 > /proc/sys/vm/drop_caches'
-fat32=$(valgrind ./myio 2 myfat32fs/fat32.t 4096 1000)
+fat32=$(./myio 2 myfat32fs/fat32.t 4096 1000)
 echo "myio-fat32-4K:" $fat32
 sudo sh -c 'sync && echo 3 > /proc/sys/vm/drop_caches'
 fio --filename=myfat32fs/fat32.t --direct=1 --rw=randread --bs=4k --ioengine=sync --iodepth=1 --numjobs=1 --number_ios=1000 --name=readlatency-test-fat32 --readonly --clat_percentiles=1 --percentile_list=50 > fiofat32out.txt
